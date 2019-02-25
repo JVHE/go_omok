@@ -1,0 +1,58 @@
+
+
+            <nav class="navbar navbar-default">
+
+                <div class="container-fluid">
+                    <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                        <span class="hamb-top"></span>
+                        <span class="hamb-middle"></span>
+                        <span class="hamb-bottom"></span>
+                    </button>
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="../video_list2.php">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 노라라!</a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <?php
+                        $email = $_SESSION['email'];
+                        $conn = mysqli_connect(
+                            'localhost',
+                            'root',
+                            'zxc123',
+                            'game') or die("<script>alert('DB연결에 실패했습니다. 관리자에게 문의해주세요!');document.location='main.php'; </script>");
+
+                        $sql = "SELECT * FROM user WHERE email='" . $email . "';";
+                        $result = mysqli_query($conn, $sql);
+                        $row_ = mysqli_fetch_array($result);
+                        $name_ = $row_['name'];
+                        //                                $user_authority = ($_SESSION['authority']) ? $_SESSION['authority'] : 0;
+                        if (!isset($_SESSION['email']) || !isset($_SESSION['name'])) {
+                            echo "<li><a class='active' href='../login.php'>로그인</a></li>";
+                            echo "<li><a class='active' href='../sign_up.php'>회원가입</a></li>";
+                        } else {
+
+                            echo "<li><a class='active' href='../upload.php'>비디오 업로드</a></li>";
+            //
+            //                    $name = $_SESSION['name'];
+                            echo "<li><a class='active' href='../user_information.php?name=" . $name_ . "' ><img class=\"media-object\" src=\"" . (($row_['link_profile'] != null) ? $row_['link_profile'] : "images/default_profile.png") . "\" alt=\"스트리밍 서비스 업데이트\" style=\"width: 32px; height: 32px;border-radius: 16px; float:left; margin-bottom:10px; margin-right:10px;\"> 안녕하세요. " . $name_ . "님!</a></li>";
+            //                    echo "<li><a class='active' href='/user_edit_password_check.php'>개인정보 수정</a></li>";
+                            echo "<li><a class='active' href='../logout.php'>로그아웃</a></li>";
+                        }
+                        ?>
+                    </ul>
+                    <div class="collapse navbar-collapse" id="#navbar-collapse-1">
+                        <form class="navbar-form navbar-right" method="get" action="../video_list2.php">
+                            <div class="form-group">
+                                <td>
+
+                  <span class="us-form-select-wrap">
+                  </span>
+                                </td>
+                                <input type="text" name="search" class="form-control" placeholder="">
+                                <button type="submit" class="btn btn-default">검색</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
